@@ -1,0 +1,37 @@
+
+#include <iostream>
+#include <map>
+#include <fstream>
+using namespace std;
+
+void insertaNombre (string linea,map<string,string>& nombres) {
+    int pos= linea.find(',');
+    if (pos !=-1){
+    string llave = linea.substr(0,pos);
+    string valor = linea.substr(pos+1);
+    nombres[llave]=valor;
+    }
+}
+
+void leerDatos (string nombreFich,map<string,string>& nombres) {
+    string linea;
+    ifstream F(nombreFich.c_str());
+    getline(F,linea);
+    while (!F.eof()) {
+        insertaNombre(linea,nombres);
+        getline(F,linea);
+    }
+
+}
+
+int main () {
+    map<string,string> nombres;
+    leerDatos("names.csv",nombres);
+    string n;
+    cin >> n;
+    cout << "El significado de " << n
+         <<  " es '" << nombres [n] << " '"<<endl; // esto no es muy correcto porque
+                                                   // al buscar con [] lo que hace es insertar un elemento en el map
+                                                   // Mejor hacerlo con iterator
+
+}
